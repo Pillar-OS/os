@@ -1,6 +1,6 @@
-import { useDisclosure, UseDisclosureReturn } from '@chakra-ui/react'
-import { atom, computed, map } from 'nanostores'
-import { Language, Settings, Theme } from './types'
+import { atom, computed, map, onMount } from 'nanostores'
+import { Command, Language, Settings, Theme } from './types'
+import { commands } from './commands'
 
 // SETTINGS
 
@@ -27,13 +27,21 @@ export const changeBackgroundImage = (backgroundImage: string) => {
 
 export const commandPaletteQueryStore = atom<string>('')
 
-export const commandPaletteSuggestionsStore = atom<string[]>([])
+export const setCommandPaletteQuery = (query: string) => {
+  commandPaletteQueryStore.set(query)
+}
+
+export const commandPaletteSuggestionsStore = atom<Command[]>([])
+
+onMount(commandPaletteSuggestionsStore, () => {
+  commandPaletteSuggestionsStore.set([...commands])
+})
 
 export const suggestions = computed(
   [commandPaletteQueryStore, commandPaletteSuggestionsStore],
   (query, suggestions) => {
     return suggestions.filter((suggestion) =>
-      suggestion.toLowerCase().includes(query)
+      suggestion.query.toLowerCase().includes(query)
     )
   }
 )

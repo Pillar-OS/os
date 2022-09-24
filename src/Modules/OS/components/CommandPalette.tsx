@@ -8,9 +8,13 @@ import {
   Input
 } from '@chakra-ui/react'
 import { osEvents } from '../events'
+import { setCommandPaletteQuery, suggestions } from '../store'
+import { useStore } from '@nanostores/react'
 
 const CommandPalette: FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
+
+  const _suggestions = useStore(suggestions)
 
   useEffect(() => {
     osEvents.on('openCommandPalette', () => onOpen())
@@ -21,22 +25,17 @@ const CommandPalette: FC = () => {
       <ModalOverlay />
       <ModalContent>
         <ModalBody>
-          <Input
-            type="text"
-            placeholder="Enter a command or query"
-            // onChange={(e) => setQuery(e.target.value)}
-            // onKeyUp={handleKeyPress}
-          />
-          {/* {suggestions && suggestions.commands && (
-              <div>
-                <h3>Commands</h3>
-                <ul>
-                  {suggestions.commands.map((command) => (
-                    <li key={command.command}>{command.command}</li>
-                  ))}
-                </ul>
-              </div>
-            )} */}
+          <>
+            <Input
+              type="text"
+              placeholder="Enter a command or query"
+              onChange={(e) => setCommandPaletteQuery(e.target.value)}
+              // onKeyUp={handleKeyPress}
+            />
+            {_suggestions.map((suggestion) => {
+              return suggestion.query
+            })}
+          </>
         </ModalBody>
       </ModalContent>
     </Modal>

@@ -9,3 +9,8 @@ export type Settings = {
   language: Language
   backgroundImage: BackgroundImage
 }
+
+export type Command = {
+  query: string
+  action: () => void
+}
