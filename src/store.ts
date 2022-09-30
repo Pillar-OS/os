@@ -1,5 +1,5 @@
 import { action, atom, onMount } from 'nanostores'
-import Realm from 'realm-web'
+import * as Realm from 'realm-web'
 import { string } from 'yup'
 import { realmApp } from '../realm'
 

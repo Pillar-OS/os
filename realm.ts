@@ -1,3 +1,3 @@
-import Realm from 'realm-web'
+import { App } from 'realm-web'
 
-export const realmApp = new Realm.App({ id: 'pillaros-zceob' })
+export const realmApp = new App({ id: 'pillaros-zceob' })

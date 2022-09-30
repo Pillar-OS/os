@@ -1,4 +1,4 @@
-import Realm from 'realm-web'
+import * as Realm from 'realm-web'
 import { realmApp } from '../../realm'
 
 export const register = async (email: string, password: string) => {
